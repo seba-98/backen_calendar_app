@@ -19,7 +19,7 @@ app.use('/api/auth', require('./routes/auth' ));
 app.use('/api/events', require('./routes/events'));
 
 
-// app.use(express.static('public'));
+ app.use(express.static('public'));
 
 //escuchar peticiones
 app.listen(port, ()=>{
