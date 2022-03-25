@@ -24,16 +24,16 @@ router.post(
    register
 );
 router.post(
-      '/login',
-      [
-         cors(),
-         check('email', 'Email es requerido y debe tener un formato válido').notEmpty(),
-         check('email', 'El email debe tener un formato valido').isEmail(), 
-         check('password', 'La contraseña es requerida').notEmpty(),
-         check('password', 'La contraseña debe tener al menos 6 caracteres').isLength({min:6}),
-         validateFields
-      ],
-      login
+   '/login',
+   [
+      cors(),
+      check('email', 'Email es requerido y debe tener un formato válido').notEmpty(),
+      check('email', 'El email debe tener un formato valido').isEmail(), 
+      check('password', 'La contraseña es requerida').notEmpty(),
+      check('password', 'La contraseña debe tener al menos 6 caracteres').isLength({min:6}),
+      validateFields
+   ],
+   login
  );
 router.get(
    '/renew',

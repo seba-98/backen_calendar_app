@@ -10,8 +10,8 @@ const validateFields = (req, res=response, next)=>{
 
     !errors.isEmpty() ? res.status(400).json({
         ok:false,
-        msg:arrTxt.join('.\n').toString()
-    })  
+        msg:arrTxt.join('.\n').toString() //convertimos el array de errores en un string con un 
+    })                                    //salto de linea entre cada error y lo enviamos como respuesta
     :
     next();
 

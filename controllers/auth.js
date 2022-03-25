@@ -100,14 +100,16 @@ const login= async (req, res = response)=>{
     }
 }
 
-const renew= async (req, res = response)=>{
+const renew = async (req, res = response)=>{
 
     const {_id, name} = req;
     const token = await generateJWT(_id, name);
 
     res.json({
         ok:true,
-        token
+        token,
+        _id,
+        name
     })
 }
 
