@@ -21,8 +21,11 @@ router.post(
     '/createEvent',
     [
         check('title', 'Título es obligatorio').not().isEmpty(),
-        check('start', 'Fecha de inicio es obligatoria').custom(isDate),
-        check('end', 'Fecha de finalización es obligatoria').custom(isDate),
+        check('notes', 'Notas son obligatorias').not().isEmpty(),
+        check('start', 'Fecha de inicio es obligatoria').not().isEmpty(),
+        check('start', 'Fecha de inicio debe ser valida').custom(isDate),
+        check('end', 'Fecha de finalización es obligatoria').not().isEmpty(),
+        check('end', 'Fecha de finalización debe ser valida').custom(isDate),
         validateFields
     ],
     createEvent

@@ -6,8 +6,7 @@ const Event = require("../models/Event")
 const getEvents=async(req, res=response)=>{
 
     try {
-        
-        const events = await Event.find().populate('user', 'name') //como la propiedad user, es de tipo Schema.Types.ObjectId,
+        const events = await Event.find().populate('user', '_id name')    //como la propiedad user, es de tipo Schema.Types.ObjectId,
                                                                     //podemos obtener los datos del usuario especificados
         return res.status(200).json({                               //en el segundo parametro de tipo string
             ok:true,
@@ -27,16 +26,23 @@ const getEvents=async(req, res=response)=>{
 
 const createEvent= async(req, res=response)=>{
 
-
     const event= new Event(req.body);
+    event.user= req._id //el id del usuario activo se puede obtener ya que el token fue cargado en las rutas
 
-    event.user=req._id //el id del usuario activo se puede obtener ya que el token fue cargado en las rutas
+    
 
     try {
         await event.save();
         return res.status(200).json({
             ok:true,
-            event:{...event, }
+            event:{
+                ...req.body,
+                _id: event._id,
+                user: {
+                    _id: req._id,
+                    name: req.name
+                }
+            }
         })
     } catch (error) {
         console.log(`Error al crear: \n ${error}`);
@@ -49,12 +55,11 @@ const createEvent= async(req, res=response)=>{
    
 }
 const updateEvent=async(req, res=response)=>{
+
+
     const id = req.params.id;
-    
     try {
-
         let event;
-
         try {
             event= await Event.findById(id);
             
@@ -69,7 +74,7 @@ const updateEvent=async(req, res=response)=>{
         if(event.user.toString() !== req._id){
             return res.status(401).json({
                 ok:false,
-                msg:'No tiene permisos para borrar este evento'
+                msg:'No tiene permisos para modificar este evento'
             })
         }
 
@@ -79,7 +84,13 @@ const updateEvent=async(req, res=response)=>{
         
         res.status(200).json({
             ok:true,
-            newEvent
+            event:{
+                ...newEvent, 
+                user: {
+                    _id: req._id,
+                    name: req.name
+                }
+            }
         })
 
 
@@ -98,6 +109,7 @@ const deleteEvent=async(req, res=response)=>{
 
     const id = req.params.id;
     const userId= req._id;
+
     
     try {
 
@@ -113,8 +125,6 @@ const deleteEvent=async(req, res=response)=>{
             })
         }
 
-
-
         if(event.user.toString() !== userId){
             return res.status(401).json({
                 ok:false,
@@ -124,7 +134,7 @@ const deleteEvent=async(req, res=response)=>{
 
         const eventDeleted=await Event.findByIdAndDelete(id);
 
-        res.status(200).json({
+        return res.status(200).json({
             ok:true,
             msg:'Evento eliminado',
             event: eventDeleted
@@ -139,10 +149,6 @@ const deleteEvent=async(req, res=response)=>{
         })
     }
     
-    return res.json({
-        ok:true,
-        msg:'delete'
-    })
 }
 
 
