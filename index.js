@@ -21,9 +21,7 @@ app.use(express.json())
 //rutas
 
 app.use('/login', express.static('public'));
-app.use('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
-});
+app.use('/calendar', express.static('public'));
 app.use('/api/auth', require('./routes/auth' ));
 app.use('/api/events', require('./routes/events'));
 
