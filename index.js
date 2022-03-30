@@ -19,12 +19,11 @@ app.use(express.static('public'));
 app.use(express.json())
 
 //rutas
+app.use('/calendar', express.static('public'));
+app.use('/login', express.static('public'));
 app.use('/api/auth', require('./routes/auth' ));
 app.use('/api/events', require('./routes/events'));
 
-app.get('/*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/public/index.html'));
-});
 
 //escuchar peticiones
 app.listen(process.env.PORT, ()=>{
