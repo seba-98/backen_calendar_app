@@ -22,9 +22,9 @@ app.use(express.json())
 app.use('/api/auth', require('./routes/auth' ));
 app.use('/api/events', require('./routes/events'));
 
-// app.get('*', (req,res) =>{
-//     res.sendFile(path.join(__dirname+'/public'));
-// });
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/index.html'));
+});
 
 //escuchar peticiones
 app.listen(process.env.PORT, ()=>{
