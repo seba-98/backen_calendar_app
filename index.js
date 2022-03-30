@@ -19,7 +19,9 @@ app.use(express.static('public'));
 app.use(express.json())
 
 //rutas
-app.get('*', (req, res) => {
+
+app.use('/login', express.static('public'));
+app.use('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '/public', 'index.html'));
 });
 app.use('/api/auth', require('./routes/auth' ));
