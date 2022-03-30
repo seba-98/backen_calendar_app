@@ -19,7 +19,7 @@ app.use(express.static('public'));
 app.use(express.json())
 
 //rutas
-// app.use('*', express.static('public'));
+ app.use('*', express.static('public'));
 // app.use('/login', express.static('public'));
 app.use('/api/auth', require('./routes/auth' ));
 app.use('/api/events', require('./routes/events'));
