@@ -20,7 +20,7 @@ app.use(express.json())
 
 //rutas
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './public', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '/public', 'index.html'));
 });
 app.use('/api/auth', require('./routes/auth' ));
 app.use('/api/events', require('./routes/events'));
