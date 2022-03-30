@@ -3,27 +3,28 @@ const { dbConection } = require('./dataBase/config');
 require('dotenv').config();
 const cors = require('cors');
 
+//creamos el sv de express en nuestra app
+const app= express();
 
 //base de datos
 dbConection();
 
-//creamos el sv de express en nuestra app
-const app= express();
-
-
-
-
+//cors
 app.use(cors());
+
+// Diretorio publico
+app.use(express.static(path.resolve(__dirname, 'public')));
+
+//lectura y parseo del body
 app.use(express.json())
 
 //rutas
 app.use('/api/auth', require('./routes/auth' ));
 app.use('/api/events', require('./routes/events'));
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
-app.use(express.static('public'));
 
 //escuchar peticiones
 app.listen(process.env.PORT, ()=>{
